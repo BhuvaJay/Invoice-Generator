@@ -1,2 +1,2 @@
 # Invoice-Generator
-React application
+ReactJs application
