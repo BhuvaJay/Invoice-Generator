@@ -9,8 +9,6 @@ function Content() {
     const [product_arr, setarr] = useState([])
     const [flag, setflag] = useState(false)
     const [ok, setok] = useState(false)
-    //e stand for Event
-    // ... stand for spreding operator
     const onChange1 = (e) => {
         setproduct({ ...product, [e.target.name]: e.target.value })
     }
@@ -21,7 +19,6 @@ function Content() {
 
 
     const [base64, setbase64] = useState("")
-    // var base64PDF = "";
 
 
     var data1 = {
@@ -72,17 +69,13 @@ function Content() {
         }
     }
 
-    //when user click on add product button this function is called
     const handleAdd = () => {
         setok(false);
         product_arr.push(product);
         console.log("Handle Added", product_arr);
-        //when user click on add product button then all the fields should be reset for add new items
         setproduct({ description: "", quantity: "1", price: "", "tax-rate": 0 });
     }
-    //when user click on make invoice button this function is called
     const handleClick = async (e) => {
-        //to stop reload page
         e.preventDefault();
 
         // client Info
@@ -105,25 +98,18 @@ function Content() {
 
         setok(false)
         setflag(true);
-        // fetch api give promise in return which has to be resolved by us
        
         const response = await fetch("https://api.easyinvoice.cloud/v2/free/invoices", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            //javascript object (data1) to json object string converter JSON.stringify(data1)
-            //Use the JavaScript function JSON.stringify() to convert it into a string. The result will be a string following the JSON notation.
             body: JSON.stringify(data1)
         });
         
         setflag(false);
         setok(true);
-        //to convert response of api in json format
         const json = await response.json()
-        // setbase64(base64 + encodeURIComponent(json.data.pdf));
-        // console.log(base64);
-        //after pdf is generated set empty array 
         setarr([]);
 
         var pdf = "data:application/pdf;base64," + String(json.data.pdf);
@@ -181,12 +167,6 @@ function Content() {
 
                     {ok && <h5 className='mt-5' style={{ "color": "green" }}>Your Invoice is Ready click to download</h5>}
 
-
-
-                    {/* <Base64Downloader base64={base64PDF} downloadName="pdfDownload">
-                    Click to download
-                </Base64Downloader> */}
-                    {/* <a onClick={onClickUrl}>Click to view</a>         */}
                 </div>
                 <div className="col-sm-2"></div>
                 <div className="col-md-4">
